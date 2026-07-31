@@ -1,20 +1,19 @@
 import { initializeApp } from "firebase/app";
 import {
     getMessaging,
-    getToken,onMessage
+    getToken,
+    onMessage
 } from "firebase/messaging";
 
 
 const firebaseConfig = {
-  apiKey: "AI",
-  authDomain: ".firebaseapp.com",
-  projectId: "",
-  storageBucket: ".firebasestorage.app",
-  messagingSenderId: "",
-  appId: "1::web:"
-
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
-
 
 
 const app = initializeApp(firebaseConfig);
@@ -26,7 +25,7 @@ export const messaging = getMessaging(app);
 
 export async function getFCMToken(){
 
-   const permission =
+    const permission =
         await Notification.requestPermission();
 
 
@@ -34,20 +33,25 @@ export async function getFCMToken(){
         return null;
     }
 
+
     const token = await getToken(
         messaging,
         {
-            vapidKey:"BLrjmjvG77n8q6MG1BV52adSG-p4gbldVTdTKm2k73d_W9YLjhXVhowRL1Jvm_qno_KRE4hmDmW9TCgrGY5lpG8"
+            vapidKey:
+            import.meta.env.VITE_FIREBASE_VAPID_KEY
         }
     );
 
 
-    console.log("TOKEN:", token);
+    console.log("FCM TOKEN:", token);
 
 
     return token;
 
 }
+
+
+
 export function listenNotification(){
 
     onMessage(
@@ -55,7 +59,7 @@ export function listenNotification(){
         (payload)=>{
 
             console.log(
-                "Foreground:",
+                "Foreground notification:",
                 payload
             );
 
