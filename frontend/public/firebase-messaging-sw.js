@@ -7,15 +7,7 @@ importScripts(
 );
 
 
-firebase.initializeApp({
-    apiKey: "A",
-  authDomain: ".firebaseapp.com",
-  projectId: "",
-  storageBucket: "firebasestorage.app",
-  messagingSenderId: "",
-  appId: "1:"
-
-});
+firebase.initializeApp(firebaseConfig);
 
 
 const messaging = firebase.messaging();
